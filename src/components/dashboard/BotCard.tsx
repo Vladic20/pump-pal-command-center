@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
-import { Play, Stop } from 'lucide-react';
+import { Play, Square } from 'lucide-react';
 import { Badge } from '../ui/badge';
 
 interface BotCardProps {
@@ -49,7 +49,7 @@ const BotCard = ({ name, description, isActive: initialState }: BotCardProps) =>
             "Processing..."
           ) : isActive ? (
             <>
-              <Stop className="h-4 w-4 mr-2" />
+              <Square className="h-4 w-4 mr-2" />
               Stop
             </>
           ) : (
