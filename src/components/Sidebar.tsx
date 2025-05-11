@@ -3,6 +3,7 @@ import React from 'react';
 import Logo from './Logo';
 import { Button } from './ui/button';
 import { X, LayoutDashboard, Bot, Wallet, Settings, FileText, Bell, List } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -10,14 +11,17 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
+  const location = useLocation();
+  const pathname = location.pathname;
+  
   const navItems = [
-    { icon: <LayoutDashboard className="sidebar-icon" />, label: 'Dashboard', active: true },
-    { icon: <Bot className="sidebar-icon" />, label: 'Bots' },
-    { icon: <Wallet className="sidebar-icon" />, label: 'Wallets' },
-    { icon: <Settings className="sidebar-icon" />, label: 'Settings' },
-    { icon: <FileText className="sidebar-icon" />, label: 'Logs' },
-    { icon: <Bell className="sidebar-icon" />, label: 'Notifications' },
-    { icon: <List className="sidebar-icon" />, label: 'Raydium Listing' },
+    { icon: <LayoutDashboard className="sidebar-icon" />, label: 'Dashboard', path: '/', active: pathname === '/' },
+    { icon: <Bot className="sidebar-icon" />, label: 'Bots', path: '/bots', active: pathname === '/bots' },
+    { icon: <Wallet className="sidebar-icon" />, label: 'Wallets', path: '/wallets', active: pathname === '/wallets' },
+    { icon: <Settings className="sidebar-icon" />, label: 'Settings', path: '/settings', active: pathname === '/settings' },
+    { icon: <FileText className="sidebar-icon" />, label: 'Logs', path: '/logs', active: pathname === '/logs' },
+    { icon: <Bell className="sidebar-icon" />, label: 'Notifications', path: '/notifications', active: pathname === '/notifications' },
+    { icon: <List className="sidebar-icon" />, label: 'Raydium Listing', path: '/raydium', active: pathname === '/raydium' },
   ];
 
   return (
@@ -54,9 +58,12 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               key={index}
               variant={item.active ? "secondary" : "ghost"}
               className={`w-full justify-start text-left mb-1 ${item.active ? 'bg-secondary text-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+              asChild
             >
-              {item.icon}
-              <span className="ml-2">{item.label}</span>
+              <Link to={item.path}>
+                {item.icon}
+                <span className="ml-2">{item.label}</span>
+              </Link>
             </Button>
           ))}
         </nav>
